@@ -1,0 +1,37 @@
+.wrap {
+    background-color: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    width: 100%;
+}
+
+.header {
+    border-bottom: 1px solid var(--clr-border);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 20px;
+}
+
+.title {
+    color: var(--clr-text-dark);
+    display: block;
+    font-weight: 500;
+    line-height: 1.5;
+
+    &.h1 {
+        font-size: 26px;
+    }
+
+    &.h2 {
+        font-size: 22px;
+    }
+
+    &.h3 {
+        font-size: 2018px;
+    }
+}
+
+.body {
+    background-color: #fff;
+    padding: 20px;
+}

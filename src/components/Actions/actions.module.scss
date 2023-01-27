@@ -1,0 +1,70 @@
+.wrap {
+    position: relative;
+}
+
+.button {
+    align-items: center;
+    background-color: hsl(215, 100%, 98%);
+    border-radius: 4px;
+    color: var(--clr-text-default);
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 32px 0 16px;
+    position: relative;
+
+    &::after {
+        aspect-ratio: 1/1;
+        background-image: url("data:image/svg+xml,%3Csvg fill='%23666' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 491.996 491.996' style='enable-background:new 0 0 491.996 491.996' xml:space='preserve'%3E%3Cpath d='m484.132 124.986-16.116-16.228c-5.072-5.068-11.82-7.86-19.032-7.86-7.208 0-13.964 2.792-19.036 7.86l-183.84 183.848L62.056 108.554c-5.064-5.068-11.82-7.856-19.028-7.856s-13.968 2.788-19.036 7.856l-16.12 16.128c-10.496 10.488-10.496 27.572 0 38.06l219.136 219.924c5.064 5.064 11.812 8.632 19.084 8.632h.084c7.212 0 13.96-3.572 19.024-8.632l218.932-219.328c5.072-5.064 7.856-12.016 7.864-19.224 0-7.212-2.792-14.068-7.864-19.128z'/%3E%3C/svg%3E");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        content: '';
+        display: inline-block;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+    }
+}
+
+.list {
+    background-color: #fff;
+    border: 1px solid rgb(0 0 0 / 5%);
+    border-radius: 8px;
+    display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    flex-direction: column;
+    padding: 8px 0;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    width: 150px;
+    z-index: 100;
+
+    &.open {
+        display: flex;
+    }
+
+    li:not(.separator) {
+        cursor: pointer;
+        padding: 4px 16px;
+
+        &:hover {
+            background-color: #f7f7f7;
+        }
+    }
+}
+
+.separator {
+    background-color: var(--clr-border);
+    display: inline-block;
+    height: 1px;
+    margin: 6px auto;
+    min-height: 1px;
+    width: calc(100% - 32px);
+}

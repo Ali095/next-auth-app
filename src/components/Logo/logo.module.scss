@@ -1,0 +1,12 @@
+.wrap {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    width: 100%;
+
+    [data-sidebar-collapsed] & {
+        opacity: 0;
+        width: 50px;
+    }
+}

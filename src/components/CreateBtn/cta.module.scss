@@ -1,0 +1,116 @@
+.btn {
+    align-items: center;
+    // animation: btnOpenAnimation 0.4s ease forwards;
+    animation-name: btnOpenAnimation;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    // animation-delay: 0.4s;
+    background-color: var(--clr-brand-primary);
+    border: 1px solid var(--clr-brand-primary);
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 13px;
+
+    [data-sidebar-pinned] & {
+        animation: none;
+    }
+
+    .text {
+        animation: textOpenAnimation 0.4s ease forwards;
+        padding-left: 10px;
+        white-space: nowrap;
+
+        [data-sidebar-pinned] & {
+            animation: none;
+        }
+    }
+
+    i {
+        --size: 16px;
+        // margin-right: 10px;
+    }
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+}
+
+[data-sidebar-collapsed] {
+    .btn {
+        animation-name: btnCloseAnimation;
+        animation-duration: 0s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in-out;
+        animation-delay: 0.26s;
+
+        // i {
+        //     margin-right: 0;
+        // }
+
+        .text {
+            animation: textCloseAnimation 0.4s ease forwards;
+        }
+    }
+}
+
+@keyframes btnCloseAnimation {
+    0% {
+        justify-content: center;
+    }
+
+    90% {
+        justify-content: flex-start;
+    }
+
+    100% {
+        justify-content: center;
+    }
+}
+
+@keyframes btnOpenAnimation {
+    0% {
+        justify-content: flex-start;
+    }
+
+    100% {
+        justify-content: center;
+    }
+}
+
+@keyframes textCloseAnimation {
+    0% {
+        opacity: 1;
+        overflow: visible;
+        padding-left: 10px;
+        width: 116px;
+    }
+
+    100% {
+        opacity: 0;
+        overflow: hidden;
+        padding-left: 0;
+        width: 0;
+    }
+}
+
+@keyframes textOpenAnimation {
+    0% {
+        opacity: 0;
+        overflow: hidden;
+        padding-left: 0;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        overflow: visible;
+        padding-left: 10px;
+        width: 116px;
+    }
+}

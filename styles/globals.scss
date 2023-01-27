@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@import 'base/reset', 'base/variables', 'base/utilities', 'base/buttons';
+@import './components/sidebar-menu', './components/card';
+@import '../node_modules/react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+
+.form {
+    max-width: 600px;
+}
+
+label {
+    cursor: pointer;
+}
+
+.dashboard {
+    align-items: flex-start;
+    display: flex;
+    height: 100vh;
+    gap: 42px;
+    justify-content: center;
+    padding-top: 200px;
+    width: 100%;
+
+    a {
+        aspect-ratio: 1/1.15;
+        background-color: #fff;
+        border: 1px solid var(--clr-border);
+        border-radius: 8px;
+        box-shadow: 0 0 0 0 var(--clr-border);
+        color: var(--clr-text-default);
+        align-items: center;
+        display: flex;
+        font-size: 24px;
+        font-weight: 500;
+        justify-content: center;
+        max-width: 200px;
+        transition: all 0.25s ease-in-out;
+        width: 100%;
+
+        &:hover {
+            box-shadow: 0 0 0 2px var(--clr-border);
+            transition: all 0.25s ease-in-out;
+        }
+    }
+}

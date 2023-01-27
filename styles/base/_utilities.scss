@@ -1,0 +1,41 @@
+body {
+    background-color: #fffdf9;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.71;
+}
+
+.icon {
+    --size: 24px;
+    align-items: center;
+    color: inherit;
+    display: flex;
+    height: var(--size);
+    justify-content: center;
+    max-width: var(--size);
+    min-width: var(--size);
+    width: 100%;
+
+    svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.flex {
+    display: flex;
+    gap: 1.2rem;
+
+    &.align-center {
+        align-items: center;
+    }
+}
+
+textarea,
+input {
+    border: 0;
+    color: inherit;
+    font: inherit;
+    outline: none;
+}

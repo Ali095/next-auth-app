@@ -1,0 +1,47 @@
+.wrap {
+    background-color: #f7f5f2;
+    border: 1px solid #e8e7e4;
+    border-radius: 10px;
+    margin: 20px 10px 0;
+    padding: 15px;
+
+    p {
+        color: var(--clr-text-default);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42;
+    }
+}
+
+.header {
+    align-items: center;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    color: #3d4592;
+}
+
+.title {
+    color: var(--clr-text-dark, #333);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.cross {
+    margin-left: auto;
+    opacity: 0.3;
+    transition: opacity 0.25s ease-in-out;
+
+    i {
+        --size: 14px;
+    }
+
+    &:hover {
+        opacity: 0.8;
+        transition: opacity 0.25s ease-in-out;
+    }
+}

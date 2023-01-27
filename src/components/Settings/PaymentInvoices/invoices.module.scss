@@ -1,0 +1,36 @@
+.wrap {
+    background-color: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: 5px;
+    padding: 40px;
+}
+
+.title {
+    color: var(--clr-text-dark);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.list {
+    table {
+        border-spacing: 0;
+        width: 100%;
+
+        th,
+        td {
+            border-bottom: 1px solid var(--clr-border);
+            font-size: 16px;
+            padding: 15px 10px;
+        }
+
+        th {
+            color: var(--clr-text-dark);
+            font-weight: 600;
+            text-align: left;
+        }
+
+        td {
+            color: var(--clr-text-default);
+        }
+    }
+}

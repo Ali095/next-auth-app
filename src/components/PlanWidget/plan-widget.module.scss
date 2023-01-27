@@ -1,0 +1,72 @@
+.wrap {
+    border-bottom: 1px solid var(--clr-border);
+    border-top: 1px solid var(--clr-border);
+    margin-top: auto;
+    padding: 30px 10px;
+}
+
+.header {
+    align-items: center;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    [data-sidebar-collapsed] & {
+        margin-bottom: 0;
+    }
+}
+
+.icon {
+    align-items: center;
+    aspect-ratio: 1/1;
+    color: var(--clr-text-default);
+    display: flex;
+    justify-content: center;
+    min-width: 30px;
+    max-width: 30px;
+    width: 100%;
+}
+
+.title {
+    color: var(--clr-text-default);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+
+    [data-sidebar-collapsed] & {
+        display: none;
+    }
+}
+
+.usage {
+    margin: 0 5px 12px;
+}
+
+.usage-text {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+
+.usage-label {
+    color: var(--clr-text-dark);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.42;
+}
+
+.usage-amount {
+    color: var(--clr-text-dark);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.42;
+}
+
+.progress {
+    background-color: #e8e7e4;
+    border-radius: 4px;
+    display: block;
+    height: 5px;
+    width: 100%;
+}

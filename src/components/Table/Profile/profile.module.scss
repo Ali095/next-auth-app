@@ -1,0 +1,30 @@
+.user {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+
+    &-details {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.avatar {
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    line-height: 0;
+    max-width: 40px;
+    min-width: 40px;
+    width: 100%;
+
+    img {
+        border-radius: 50%;
+    }
+}
+
+.name {
+    color: var(--clr-text-dark);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+}

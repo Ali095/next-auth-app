@@ -1,0 +1,37 @@
+.wrap {
+    position: relative;
+    width: 100%;
+
+    input {
+        background-color: hsl(0, 0%, 96%);
+        border-radius: 5px;
+        color: var(--clr-text-default);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        min-height: 48px;
+        padding: 12px;
+        width: 100%;
+    }
+
+    input[type='password'] {
+        padding-right: 50px;
+    }
+}
+
+.pass-switch {
+    align-items: center;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+
+    i {
+        --size: 20px;
+    }
+}

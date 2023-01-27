@@ -1,0 +1,42 @@
+.btn {
+    align-items: center;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 8px 58px 8px 16px;
+    width: 100%;
+
+    i {
+        --size: 32px;
+    }
+
+    &.google {
+        i {
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 4px;
+        }
+    }
+
+    &.blue {
+        background-color: hsl(214, 82%, 51%);
+    }
+
+    &.black {
+        background-color: hsl(0, 0%, 10%);
+    }
+}
+
+.text {
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.5;
+    text-transform: capitalize;
+    width: 100%;
+}
