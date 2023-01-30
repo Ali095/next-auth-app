@@ -1,7 +1,9 @@
 import { getUserAuthentication } from '../lib/auth-validator'
+import { fetchErrorHandler } from '../lib/handlers';
 
 
 export type APIResponse = {
+	success: boolean,
 	statusCode: number,
 	message: string,
 	data: any
@@ -31,10 +33,12 @@ export class APIService {
 				// userService.logout();
 			}
 
-			const error = (data && data.message) || response.statusText;
+			data.success = false;
+			const error = data || response.statusText;
 			return Promise.reject(error);
 		}
 
+		data.success = true;
 		return data;
 	}
 
@@ -44,11 +48,11 @@ export class APIService {
 			method: 'GET',
 			headers: this.authHeader(requestUrl)
 		};
-		const response = await fetch(requestUrl, requestOptions);
+		const response = await fetch(requestUrl, requestOptions).catch(fetchErrorHandler);
 		return this.handleResponse(response);
 	}
 
-	async post(apiPath: string, body: Record<string, any>, credentials?: RequestCredentials): Promise<APIResponse> {
+	async post(apiPath: string, body: Record<string, any>, credentials?: RequestCredentials): Promise<APIResponse | any> {
 		const requestUrl: string = this.baseUrl + apiPath;
 		const requestOptions: RequestInit = {
 			method: 'POST',
@@ -56,7 +60,7 @@ export class APIService {
 			credentials: credentials || 'include',
 			body: JSON.stringify(body)
 		};
-		const response = await fetch(requestUrl, requestOptions);
+		const response = await fetch(requestUrl, requestOptions).catch(fetchErrorHandler);
 		return this.handleResponse(response);
 	}
 
@@ -67,7 +71,7 @@ export class APIService {
 			headers: { 'Content-Type': 'application/json', ...this.authHeader(requestUrl) },
 			body: JSON.stringify(body)
 		};
-		const response = await fetch(requestUrl, requestOptions);
+		const response = await fetch(requestUrl, requestOptions).catch(fetchErrorHandler);
 		return this.handleResponse(response);
 	}
 }

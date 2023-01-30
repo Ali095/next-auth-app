@@ -1,5 +1,6 @@
 // add bootstrap css
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/globals.scss';
 
 import type { AppProps } from 'next/app';
@@ -8,6 +9,7 @@ import Progressbar from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
 import { getUserAuthentication } from '../lib/auth-validator';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -53,5 +55,17 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <Progressbar />
         {authorized && <Component {...pageProps} />}
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
     </>;
 };

@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { getUserAuthentication } from '../../lib/auth-validator';
-import logger from '../../lib/logger';
+import { errorHandler } from '../../lib/handlers';
 import { authService } from '../../services/auth.service';
 import AuthForm from '../../template-parts/Auth/AuthForm/AuthForm';
 
@@ -10,6 +11,7 @@ let loaded = false;
 
 export default function Signup() {
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         // redirect to home if already logged in
@@ -21,16 +23,16 @@ export default function Signup() {
 
     const handleSigup = async (data: any) => {
         const { email, password } = data;
-        setLoading(true);
-        try {
-            await authService.signup(email, password);
-            // get return url from query parameters or default to '/'
+        setLoading(true); setErrorMessage('');
+
+        const { success } = await authService.signup(email, password)
+            .catch(e => errorHandler(e, false, setErrorMessage(e.message)));
+        setLoading(false);
+
+        if (success) {
+            toast.success('Registered Successfully');
             const returnUrl = router.query.returnUrl?.toString() || '/';
             router.push(returnUrl);
-        } catch (error) {
-            logger.ApiError('Signup API failed', error);
-        } finally {
-            setLoading(false)
         }
     };
 
@@ -46,6 +48,7 @@ export default function Signup() {
                 varient='signUp'
                 onValidSubmit={handleSigup}
                 loading={loading}
+                authError={errorMessage}
             />
         </>
     );

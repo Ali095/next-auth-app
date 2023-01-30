@@ -2,8 +2,9 @@
 import Head from 'next/head';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { getUserAuthentication } from '../../lib/auth-validator';
-import logger from '../../lib/logger';
+import { errorHandler } from '../../lib/handlers';
 import { authService } from '../../services/auth.service';
 import AuthForm from '../../template-parts/Auth/AuthForm/AuthForm';
 
@@ -11,6 +12,7 @@ let loaded = false;
 
 export default function SignIn() {
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         // redirect to home if already logged in
@@ -21,19 +23,17 @@ export default function SignIn() {
     });
 
     const handleSigin = async (data: any) => {
-        logger.log(typeof data, data);
         const { email, password } = data;
-        setLoading(true);
-        try {
-            await authService.signin(email, password);
-            const returnUrl = router.query.returnUrl?.toString() || '/';
-            setLoading(false);
-            router.push(returnUrl);
+        setLoading(true); setErrorMessage('');
 
-        } catch (error) {
-            logger.ApiError('Signin API failed', error);
-        } finally {
-            setLoading(false);
+        const { success } = await authService.signin(email, password)
+            .catch(e => errorHandler(e, false, setErrorMessage(e.message)));
+        setLoading(false);
+
+        if (success) {
+            toast.success('Authenticated Successfully');
+            const returnUrl = router.query.returnUrl?.toString() || '/';
+            router.push(returnUrl);
         }
     };
 
@@ -50,9 +50,8 @@ export default function SignIn() {
                 varient='signIn'
                 onValidSubmit={handleSigin}
                 loading={loading}
+                authError={errorMessage}
             />
-
-
         </>
     );
 }
