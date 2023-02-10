@@ -16,6 +16,7 @@ import Header from '../../template-parts/User/Header/Header';
 import Content from '../../template-parts/Layout/Content';
 import MenuItem from '../../components/MenuItem/MenuItem';
 import ProfileInput from '../../components/Settings/Profile/ProfileInput/ProfileInput';
+import { UseACL } from '../../components/AccessControl/ACL';
 
 export default function Home() {
     const [role, setRole] = useState<SelectOption | undefined>(roleOptions[0]);
@@ -90,13 +91,16 @@ export default function Home() {
                                     />
                                 </InputGroup>
 
-                                <InputGroup label='Role'>
-                                    <Select
-                                        value={role}
-                                        options={roleOptions}
-                                        onChange={o => setRole(o)}
-                                    />
-                                </InputGroup>
+                                <UseACL  permissions={["update.user.role"]}>
+                                    <InputGroup label='Role'>
+                                        <Select
+                                            value={role}
+                                            options={roleOptions}
+                                            onChange={o => setRole(o)}
+                                            style={{ maxWidth: '100%' }}
+                                        />
+                                    </InputGroup>
+                                </UseACL>
 
                                 <InputGroup label='Timezone'>
                                     <Select

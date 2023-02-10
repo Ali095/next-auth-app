@@ -3,9 +3,9 @@ import Head from 'next/head';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getUserAuthentication } from '../../lib/auth-validator';
+import { AuthHelper } from '../../lib/AuthHelper';
 import { errorHandler } from '../../lib/handlers';
-import { authService } from '../../services/auth.service';
+import { authService } from '../../services/user_service';
 import AuthForm from '../../template-parts/Auth/AuthForm/AuthForm';
 
 let loaded = false;
@@ -16,10 +16,11 @@ export default function SignIn() {
 
     useEffect(() => {
         // redirect to home if already logged in
-        if (getUserAuthentication() && !loaded) {
+        if (AuthHelper.isUserLoggedIn() && !loaded) {
             router.push('/');
         }
         loaded = true;
+        console.log("loader Afte r=>",loaded);
     });
 
     const handleSigin = async (data: any) => {
