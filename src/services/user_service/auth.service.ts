@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { APIService, APIResponse } from './API.service';
+import { APIService, APIResponse } from '../API.service';
 
 export class AuthService extends APIService {
 	public async signup(email: string, password: string): Promise<APIResponse> {
@@ -17,7 +17,7 @@ export class AuthService extends APIService {
 	}
 
 	public signout(): void {
-		localStorage.removeItem("user");
+		localStorage.clear();
 		Router.push("/signin");
 	}
 }

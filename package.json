@@ -24,6 +24,7 @@
     "react-imask": "^6.4.3",
     "react-loader-spinner": "^5.3.4",
     "react-super-responsive-table": "^5.2.1",
+    "react-toastify": "^9.1.1",
     "rxjs": "^7.8.0",
     "swr": "^2.0.1",
     "yup": "^0.32.11"

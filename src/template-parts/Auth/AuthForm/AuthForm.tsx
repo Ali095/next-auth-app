@@ -13,6 +13,7 @@ import AuthDivider from '../AuthDivider/AuthDivider';
 import AuthHints from '../AuthHints/AuthHints';
 import AuthTitle from '../AuthTitle/AuthTitle';
 import feildStyles from '../input.module.scss';
+import CustomAlert from '../../../components/Alert/CustomAlert';
 
 
 type AuthFormProps = {
@@ -20,10 +21,11 @@ type AuthFormProps = {
     onValidSubmit: (data: any) => void
     onInvalidSubmit?: (data: any) => void
     style?: CSSProperties
-    loading?: boolean
+    loading?: boolean,
+    authError?: boolean | string
 }
 
-const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubmit, ...props }: AuthFormProps) => {
+const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubmit, authError = false, ...props }: AuthFormProps) => {
     const [passHidden, setPassHidden] = useState(true);
     const [inputType, setInputType] = useState('password');
 
@@ -76,7 +78,9 @@ const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubmit, ...
                 </button>
             </Form.Group>
 
-            <button type='submit' className="btn__primary">
+            {authError && <CustomAlert type='danger' heading={`${varient === 'signIn' ? 'Authentication' : 'Registration'} Failed`} content={String(authError)} />}
+
+            <button disabled={loading} type='submit' className="btn__primary">
                 {loading ? <Bars color='#fff' height={40} /> : varient === 'signIn' ? 'Sign In' : 'Create Account'}
             </button>
 
@@ -97,83 +101,6 @@ const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubmit, ...
             </AuthHints>
 
         </Form>
-
-
-
-
-
-
-
-
-        {/* <form
-            onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}
-            style={style}
-            className={styles.form}
-            {...props}
-        >
-            <AuthTitle>{varient === 'signIn' ? 'Sign In' : 'Create Account'}</AuthTitle>
-            <AuthButton name='google' variant='blue' />
-            <AuthButton name='apple' variant='black' />
-            <AuthDivider />
-
-            <div className={feildStyles.wrap}>
-                <input
-                    type='text'
-                    placeholder='Email'
-                    className={`input ${errors.email ? 'is-invalid' : ''}`}
-                    {...register('email')}
-                />
-                <div className="invalid-feedback">{errors.email?.message?.toString()}</div>
-            </div>
-
-            <div className={feildStyles.wrap}>
-                <input
-                    type={inputType}
-                    placeholder={varient === 'signIn' ? 'Password' : 'Set a Password'}
-                    className={`input ${errors.password ? 'is-invalid' : ''}`}
-                    {...register('password')}
-                />
-                <div className="invalid-feedback">{errors.password?.message?.toString()}</div>
-                <button
-                    className={feildStyles['pass-switch']}
-                    onClick={togglePasswordView}
-                    type="button"
-                >
-                    <Icon name={`${passHidden ? 'passHide' : 'passView'}`} />
-                </button>
-            </div>
-
-            <div style={{ width: '100%' }} className="alert alert-danger" role="alert">
-                Invalid Login Credentials
-            </div>
-
-            <div style={{ width: '100%' }} className="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Authentication Error!</strong><br /> Invalid login credentials are provided
-                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
-            <button type='submit' className="btn__primary">
-                {loading ? <Bars color='#fff' height={40} /> : varient === 'signIn' ? 'Sign In' : 'Create Account'}
-            </button>
-
-
-
-            {varient === 'signIn' &&
-                <AuthHints style={{ marginTop: '12px' }}>
-                    Don&apos;t have an account? <Link href='/signup'>Create Account</Link>
-                </AuthHints>
-            }
-
-            {varient === 'signUp' &&
-                <AuthHints style={{ marginTop: '12px' }}>
-                    Already have an account? <Link href='/signin'>Sign in</Link>
-                </AuthHints>
-            }
-
-            <AuthHints>
-                Forgot Password? <Link href='/recover-pass'>Reset Password</Link>
-            </AuthHints>
-        </form> */}
 
         <p style={{ textAlign: 'center', marginTop: '30px', fontSize: '15px' }}>
             By continuing you accept our

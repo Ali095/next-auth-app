@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import styles from './usermenu.module.scss';
 import Icon from '../../../components/Icons/Icons';
-import {authService} from '../../../services/auth.service';
+import {authService} from '../../../services/user_service';
 
 
 

@@ -1,13 +1,15 @@
 // add bootstrap css
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/globals.scss';
 
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Progressbar from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
-import { getUserAuthentication } from '../lib/auth-validator';
+import { AuthHelper } from '../lib/AuthHelper';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -36,11 +38,11 @@ export default function App({ Component, pageProps }: AppProps) {
         // redirect to login page if accessing a private page and not logged in
         const publicPaths = ['/signin', '/signup', '/recover-pass'];
         const path = url.split('?')[0];
-        if (!getUserAuthentication() && !publicPaths.includes(path)) {
+        if (!AuthHelper.isUserLoggedIn() && !publicPaths.includes(path)) {
             setAuthorized(false);
             router.push({
                 pathname: '/signin',
-                query: { returnUrl: router.asPath }
+                query: { returnUrl: url }
             });
         } else {
             setAuthorized(true);
@@ -53,5 +55,17 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <Progressbar />
         {authorized && <Component {...pageProps} />}
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
     </>;
 };
