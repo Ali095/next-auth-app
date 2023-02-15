@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 @import 'base/reset', 'base/variables', 'base/utilities', 'base/buttons';
-@import './components/sidebar-menu', './components/card';
-@import '../node_modules/react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+@import './components/sidebar-menu';
+// @import '../node_modules/react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 .form {
     max-width: 600px;
@@ -42,4 +42,10 @@ label {
             transition: all 0.25s ease-in-out;
         }
     }
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
 }

@@ -2,13 +2,13 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import styles from './widget.module.scss';
 
-type WidgetProps = {
+type WidgetHeaderProps = {
     children: ReactNode
     style?: CSSProperties
 }
 
-export const Widget = ({ children, style }: WidgetProps) => {
+export const WidgetHeader = ({ children, style }: WidgetHeaderProps) => {
     return (
-        <div style={style} className={styles.wrap}>{children}</div>
+        <header style={style} className={styles.header}>{children}</header>
     );
 };

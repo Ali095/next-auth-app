@@ -1,52 +1,44 @@
+import { useEffect, useState } from 'react';
+import { Alert } from 'react-bootstrap';
 
-import React, { useEffect, useState } from 'react';
-import styles from './alert.module.scss';
-import Portal from '../Portal/Portal';
-import Icon from '../Icons/Icons';
-
-type AlertProps = {
-    autoClose?: boolean
-    delay?: number
-    handleClose?: () => void
-    id?: string
-    isOpen?: boolean
-    message: string
-    variant?: 'success' | 'danger' | 'warning' | 'info'
+export interface AlertOptions {
+	dismissible?: boolean;
+	closeLabel?: string;
+	closeVariant?: string;
+	transition?: boolean;
 }
 
-const Alert = ({ autoClose = true, delay = 5000, handleClose, isOpen = true, message, variant = 'info' }: AlertProps) => {
-    const [open, setOpen] = useState<boolean>(isOpen);
+export interface AlertProps {
+	type?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light';
+	heading?: boolean | string;
+	content: string;
+	options?: AlertOptions;
+}
 
-    useEffect(() => {
-        autoClose && setTimeout(() => setOpen(false), delay);
-    }, [autoClose, handleClose, delay]);
+const defaultOptions: AlertOptions = {
+	dismissible: true,
+	closeLabel: 'Close',
+	transition: true
+}
 
-    useEffect(() => {
-        if (!open) setTimeout(() => {
-            handleClose && handleClose();
-        }, 500);
+export function CustomAlert({ type = 'info', heading = false, content, options = defaultOptions }: AlertProps) {
+	const [showAlert, setShowAlert] = useState(true);
 
-    }, [open, handleClose]);
+	useEffect(() => {
+		if (content)
+			setShowAlert(true);
+	}, [content]);
 
-    return (
-        <Portal wrapperId='alert'>
-            <div className={`${styles.wrap} ${!open ? styles.close : ''} ${styles[variant]}`}>
-                <span className={styles.icon}>
-                    <Icon name={variant} />
-                </span>
-
-                <span className={styles.text}>{message}</span>
-
-                <button
-                    onClick={() => setOpen(false)}
-                    className={styles['close-btn']}
-                >
-                    <Icon name='cross' />
-                </button>
-            </div>
-        </Portal>
-    );
-};
-
-
-export default Alert;
+	return showAlert ? <Alert
+		style={{ width: '100%' }}
+		variant={type}
+		onClose={() => setShowAlert(false)}
+		dismissible={options.dismissible}
+		closeLabel={options.closeLabel}
+		closeVariant={options.closeVariant}
+		transition={options.transition}
+	>
+		{heading && <Alert.Heading>{heading}</Alert.Heading>}
+		<p>{content}</p>
+	</Alert> : <></>
+}

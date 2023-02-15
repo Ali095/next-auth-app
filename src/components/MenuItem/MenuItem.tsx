@@ -1,5 +1,5 @@
 
-import Icon from '../Icons/Icons';
+import { Icon } from '../Icons';
 import { NavLink } from './NavLink';
 
 type MenuItemProps = {
@@ -8,7 +8,7 @@ type MenuItemProps = {
     icon: string
 }
 
-const MenuItem = ({ title, href, icon }: MenuItemProps) => {
+export const MenuItem = ({ title, href, icon }: MenuItemProps) => {
     return (
         <li className="sidebar__menu-item">
             <NavLink href={href}>
@@ -21,4 +21,3 @@ const MenuItem = ({ title, href, icon }: MenuItemProps) => {
     );
 };
 
-export default MenuItem;

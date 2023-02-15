@@ -7,7 +7,7 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Progressbar from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
-import { AuthHelper } from '../lib/AuthHelper';
+import { AuthHelper } from '../common/auth';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 

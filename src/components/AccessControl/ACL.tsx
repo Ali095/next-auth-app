@@ -1,8 +1,8 @@
 
-import router from 'next/router';
+import Router from 'next/router';
 import { ReactNode } from 'react';
 import { toast } from 'react-toastify';
-import { AuthHelper, UserAuthData } from '../../lib/AuthHelper';
+import { AuthHelper, UserAuthData } from '../../common/auth';
 
 
 export type ACLProps = {
@@ -40,7 +40,7 @@ export const UseACL = ({ children, permissions = [], roles = [] }: ACLProps) => 
 
     if (!userData) {
         toast.error("Can't found the authenticity of user. Please reconsider login");
-        router.push({ pathname: '/signin', query: { returnUrl: router.asPath } });
+        Router.push({ pathname: '/signin', query: { returnUrl: Router.asPath } });
     }
 
     const isUserHasAccess: boolean = (permissions.length === 0 && roles.length === 0) || userHasValidRoles() || userHasValidPermissions()
