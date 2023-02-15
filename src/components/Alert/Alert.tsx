@@ -21,7 +21,7 @@ const defaultOptions: AlertOptions = {
 	transition: true
 }
 
-export function CustomAlert({ type = 'info', heading = false, content, options = defaultOptions }: AlertProps) {
+export const CustomAlert = ({ type = 'info', heading = false, content, options = defaultOptions }: AlertProps) => {
 	const [showAlert, setShowAlert] = useState(true);
 
 	useEffect(() => {

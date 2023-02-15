@@ -1,0 +1,52 @@
+.cards {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: 10px;
+    box-shadow: 0 0 12px 0 rgb(55 73 72 / 2%);
+    display: flex;
+    max-width: 300px;
+    padding: 24px;
+    width: 100%;
+}
+
+.details {
+    p {
+        color: var(--clr-text-default);
+        font-size: 15px;
+        font-weight: 500;
+    }
+}
+
+.label {
+    color: var(--clr-text-dark);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.stats {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+}
+
+.count {
+    color: var(--clr-text-dark);
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.percentage {
+    color: hsl(146, 50%, 36%);
+    font-size: 16px;
+    font-weight: 500;
+
+    &.minus {
+        color: hsl(0, 100%, 50%);
+    }
+}

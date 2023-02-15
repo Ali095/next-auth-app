@@ -11,7 +11,7 @@ export const UserProfileMenu = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const container = useRef<HTMLDivElement>(null);
 
-    function handleClickedOutside(e: Event) {
+    const handleClickedOutside = (e: Event) => {
         container.current && !container.current.contains(e.target as HTMLElement) && setOpenMenu(false);
     }
 

@@ -36,7 +36,7 @@ export const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubm
 
     }, [inputType, passHidden]);
 
-    function togglePasswordView() {
+    const togglePasswordView = () => {
         setPassHidden(prev => !prev);
     }
 
@@ -64,7 +64,6 @@ export const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubm
 
             <AuthTitle>{varient === 'signIn' ? 'Sign In' : 'Create Account'}</AuthTitle>
             <AuthButton name='google' variant='blue' />
-            <AuthButton name='apple' variant='black' />
             <AuthDivider />
 
             <Form.Group className={`${feildStyles.wrap} mb-3`} controlId='formEmail'>

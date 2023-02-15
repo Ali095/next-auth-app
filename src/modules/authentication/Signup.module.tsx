@@ -9,7 +9,7 @@ import { AuthForm } from './widgets/AuthForm';
 
 let loaded = false;
 
-export function SignupModule() {
+export const SignupModule = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 

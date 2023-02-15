@@ -12,12 +12,12 @@ export const Sidebar = ({ children, ...props }: SidebarProps) => {
     const [collapsed, setCollapsed] = useState(false);
     const [pinned, setPinned] = useState(true);
 
-    function handleMouseEnter(e: MouseEvent<HTMLElement>) {
+    const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {
         if (pinned) return
         setCollapsed(false);
     }
 
-    function handleMouseLeave(e: MouseEvent<HTMLElement>) {
+    const handleMouseLeave=(e: MouseEvent<HTMLElement>)=> {
         if (pinned) return
         setCollapsed(true);
     }

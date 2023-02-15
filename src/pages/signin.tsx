@@ -1,9 +1,9 @@
 
 import Head from 'next/head';
-import { SignInModule } from '../../modules/authentication';
+import { SignInModule } from '../modules/authentication';
 
 
-export default function SignIn() {
+export const SignIn = () => {
     return (
         <>
             <Head>
@@ -16,4 +16,6 @@ export default function SignIn() {
         </>
     );
 }
+
+export default SignIn;
 

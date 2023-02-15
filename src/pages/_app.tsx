@@ -12,7 +12,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 
 
-export default function App({ Component, pageProps }: AppProps) {
+export const App = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();
     const [authorized, setAuthorized] = useState(false);
 
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
         };
     });
 
-    function authCheck(url: string) {
+    const authCheck = (url: string) => {
         // redirect to login page if accessing a private page and not logged in
         const publicPaths = ['/signin', '/signup', '/recover-pass'];
         const path = url.split('?')[0];
@@ -69,3 +69,5 @@ export default function App({ Component, pageProps }: AppProps) {
         />
     </>;
 };
+
+export default App;

@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import { HomeModule } from '../modules/home';
 
-export function Home() {
+export const Home = () => {
 
     return (
         <>
