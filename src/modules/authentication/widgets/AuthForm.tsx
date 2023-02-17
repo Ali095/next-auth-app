@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { Bars } from 'react-loader-spinner';
 import * as Yup from 'yup';
 import { Icon } from '../../../components/Icons';
 import styles from './styles/auth.module.scss';
@@ -14,6 +13,7 @@ import AuthHints from './AuthHints';
 import AuthTitle from './AuthTitle';
 import feildStyles from './styles/input.module.scss';
 import { CustomAlert } from '../../../components/Alert';
+import { Loader } from '../../../components/Loader';
 
 
 
@@ -82,7 +82,7 @@ export const AuthForm = ({ varient, loading, style, onValidSubmit, onInvalidSubm
             {authError && <CustomAlert type='danger' heading={`${varient === 'signIn' ? 'Authentication' : 'Registration'} Failed`} content={String(authError)} />}
 
             <button disabled={loading} type='submit' className="btn__primary">
-                {loading ? <Bars color='#fff' height={40} /> : varient === 'signIn' ? 'Sign In' : 'Create Account'}
+                {loading ? <Loader color='#fff' height={40} /> : varient === 'signIn' ? 'Sign In' : 'Create Account'}
             </button>
 
             {varient === 'signIn' &&

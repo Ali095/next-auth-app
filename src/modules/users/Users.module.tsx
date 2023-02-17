@@ -1,8 +1,9 @@
 
 import Head from 'next/head';
 import { DashboardTiles } from '../../components/Tiles';
-import UsersTable from '../../components/Users/UsersTable';
+// import UsersTable from '../../components/Users/UsersTable';
 import { Layout, Section, SectionHeader, SectionTitle } from '../../components/Layout';
+import { UsersList } from './widgets/UsersList';
 
 
 export const UsersModule = () => {
@@ -48,7 +49,7 @@ export const UsersModule = () => {
 					</SectionHeader>
 
 					<DashboardTiles data={data} />
-					<UsersTable />
+					<UsersList />
 				</Section>
 			</Layout>
 		</>

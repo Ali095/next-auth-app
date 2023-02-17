@@ -1,6 +1,6 @@
 
 import Head from 'next/head';
-import { HomeModule } from '../modules/home';
+import { UsersModule } from '../modules/users';
 
 export const Users = () => {
 
@@ -12,7 +12,7 @@ export const Users = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<HomeModule />
+			<UsersModule />
 		</>
 	);
 }
