@@ -1,4 +1,4 @@
-import { PaginationOptionsRequest, PaginationOptionsResponse } from '../@types'
+import { PaginationRequestOptions, PaginationOptionsResponse } from '../@types'
 
 export const publicPages: string[] = [
 	'signin',
@@ -14,8 +14,10 @@ export const defaultPaginationOptions: PaginationOptionsResponse = {
 	totalRecords: 0
 }
 
-export const defaultPaginationOptionsRequest: PaginationOptionsRequest = {
-	limit: 10,
-	page: 1,
-	search: ''
+export const getDefaultPaginationRequestOptions = (options?: Partial<PaginationRequestOptions>): PaginationRequestOptions => {
+	return {
+		limit: options?.limit || 10,
+		page: options?.page || 1,
+		search: options?.search || ''
+	};
 }

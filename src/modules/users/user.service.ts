@@ -1,16 +1,12 @@
-import { PaginationOptionsRequest, PaginationResponse } from '../../@types';
-import { defaultPaginationOptions, defaultPaginationOptionsRequest } from '../../common/constants';
+import { PaginationRequestOptions, PaginationResponse } from '../../@types';
+import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../common/constants';
 import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
 import { UserType } from './@types';
 
 export class UserService extends APIService {
-	public async getUsersList(params: PaginationOptionsRequest): Promise<PaginationResponse<UserType>> {
-		const {
-			page = defaultPaginationOptionsRequest.page,
-			limit = defaultPaginationOptionsRequest.limit,
-			search = defaultPaginationOptionsRequest.search
-		} = params;
+	public async getUsersList(params: PaginationRequestOptions): Promise<PaginationResponse<UserType>> {
+		const { page, limit, search } = getDefaultPaginationRequestOptions(params);
 
 		try {
 			const res: APIResponse<any> = await this.get(`/users?page=${page}&limit=${limit}&search=${search}`);

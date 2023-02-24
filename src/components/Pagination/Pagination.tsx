@@ -1,6 +1,5 @@
 import React from 'react';
 import { PaginationOptionsResponse } from '../../@types';
-import { defaultPaginationOptionsRequest } from '../../common/constants';
 import styles from './pagination.module.scss';
 import { usePagination } from './usePagination';
 
@@ -31,8 +30,7 @@ export const Pagination = ({
     const pageButtons = usePagination({ currentPage, totalPages, onPageButtonClick: (page) => onChange({ page }) });
 
 
-    const onChange = ({ page = currentPage, limit }: { page?: number, limit?: number }) => {
-        limit = limit || recordsPerPage || defaultPaginationOptionsRequest.limit || payloadSize;
+    const onChange = ({ page = currentPage, limit = recordsPerPage }: { page?: number, limit?: number }) => {
 
         if (page !== currentPage || limit !== recordsPerPage) {
 

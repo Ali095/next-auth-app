@@ -12,8 +12,8 @@ export type PaginationResponse<T> = {
 	paginateOptions: PaginationOptionsResponse;
 }
 
-export type PaginationOptionsRequest = {
-	page?: number;
-	limit?: number;
-	search?: string;
+export type PaginationRequestOptions = {
+	page: number;
+	limit: number;
+	search: string;
 }

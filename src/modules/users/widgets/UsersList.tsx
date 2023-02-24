@@ -9,7 +9,7 @@ import { UserType } from '../@types';
 import { UsersDataTable } from './UsersDataTable';
 import userService from '../user.service';
 import { Pagination } from '../../../components/Pagination';
-import { defaultPaginationOptions, defaultPaginationOptionsRequest } from '../../../common/constants';
+import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../../common/constants';
 
 
 export const UsersList = () => {
@@ -17,7 +17,7 @@ export const UsersList = () => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState<UserType[]>([]);
     const [paginationOptions, setPaginateOptions] = useState(defaultPaginationOptions);
-    const [paginationRequest, setPaginationRequest] = useState(defaultPaginationOptionsRequest);
+    const [paginationRequest, setPaginationRequest] = useState(getDefaultPaginationRequestOptions());
 
     const fetchData = useCallback(async () => {
         setLoading(true);
