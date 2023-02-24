@@ -7,9 +7,9 @@ export type asyncHandlerOptions = {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const asyncHandler = async (asyncFunction: Function, errorMessage: boolean | string = false, successMessage: boolean | string = false, ...functionArguments: any[]): Promise<[error: any, data: any]> => {
+export const asyncHandler = async <T>(asyncFunction: Function, errorMessage: boolean | string = false, successMessage: boolean | string = false, ...functionArguments: any[]): Promise<[error: any, data: T | null]> => {
 	try {
-		const data = await asyncFunction(functionArguments);
+		const data: T = await asyncFunction(functionArguments);
 		if (successMessage)
 			toast.error(String(successMessage));
 		return [null, data];

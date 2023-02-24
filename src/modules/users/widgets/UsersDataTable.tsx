@@ -11,7 +11,7 @@ export const UsersDataTable = ({ users = [], loading }: { users: UserType[], loa
 		<tr key={idx}>
 			<td><Checkbox /></td>
 			<td>{idx + 1}</td>
-			<td><UserProfile name={user.name} email={user.email} /></td>
+			<td><UserProfile profilePicture={user.avatar} name={user.name} email={user.email} /></td>
 			<td>{user.role}</td>
 			<td>{user.plan}</td>
 			<td>{user.billing}</td>
