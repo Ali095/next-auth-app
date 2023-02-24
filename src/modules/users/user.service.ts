@@ -2,6 +2,8 @@ import { PaginationRequestOptions, PaginationResponse } from '../../@types';
 import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../common/constants';
 import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
+import { authService } from '../authentication';
+import { IUserCreation } from '../authentication/@types';
 import { UserType } from './@types';
 
 export class UserService extends APIService {
@@ -38,6 +40,10 @@ export class UserService extends APIService {
 				payload: []
 			}
 		}
+	}
+
+	public async addNewUser(userData: IUserCreation) {
+		authService.signup('a', 'b', { first_name: 'nikal bhr' });
 	}
 }
 
