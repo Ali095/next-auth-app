@@ -27,7 +27,7 @@ export const App = ({ Component, pageProps }: AppProps) => {
         // run auth check on route change
         router.events.on('routeChangeComplete', authCheck);
 
-        // unsubscribe from events in useEffect return function
+        // unsubscribe from events in useEffect return method --- unmounting
         return () => {
             router.events.off('routeChangeStart', hideContent);
             router.events.off('routeChangeComplete', authCheck);

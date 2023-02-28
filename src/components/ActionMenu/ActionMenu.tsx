@@ -1,6 +1,6 @@
 
 import { ReactNode, useEffect } from "react";
-import { Portal } from "../../../components/Portal";
+import { Portal } from "../Portal";
 
 type ActionsMenuProps = {
     children: ReactNode

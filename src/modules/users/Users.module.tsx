@@ -1,7 +1,5 @@
 
-import Head from 'next/head';
 import { DashboardTiles } from '../../components/Tiles';
-// import UsersTable from '../../components/Users/UsersTable';
 import { Layout, Section, SectionHeader, SectionTitle } from '../../components/Layout';
 import { UsersList } from './widgets/UsersList';
 
@@ -35,23 +33,15 @@ export const UsersModule = () => {
 	]
 
 	return (
-		<>
-			<Head>
-				<title>Dashboard</title>
-				<meta name="description" content="dashboard" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+		<Layout>
+			<Section>
+				<SectionHeader>
+					<SectionTitle>Users</SectionTitle>
+				</SectionHeader>
 
-			<Layout>
-				<Section>
-					<SectionHeader>
-						<SectionTitle>Users</SectionTitle>
-					</SectionHeader>
-
-					<DashboardTiles data={data} />
-					<UsersList />
-				</Section>
-			</Layout>
-		</>
+				<DashboardTiles data={data} />
+				<UsersList />
+			</Section>
+		</Layout>
 	)
 }

@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -38,20 +37,12 @@ export const SignInModule = () => {
 
 
 	return (
-		<>
-			<Head>
-				<title>Sign in</title>
-				<meta name="description" content="sign in" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-
-			<AuthForm
-				varient='signIn'
-				onValidSubmit={handleSigin}
-				loading={loading}
-				authError={errorMessage}
-			/>
-		</>
+		<AuthForm
+			varient='signIn'
+			onValidSubmit={handleSigin}
+			loading={loading}
+			authError={errorMessage}
+		/>
 	);
 }
 

@@ -5,7 +5,7 @@ import styles from './styles/add.user.module.scss';
 
 export const AddUser = ({ closePopup }: { closePopup: (...args: any[]) => any; }) => {
 
-    function handleCancel() {
+    const handleCancel = () => {
         closePopup();
     }
 

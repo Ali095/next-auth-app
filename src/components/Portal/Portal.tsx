@@ -2,7 +2,7 @@
 import { useState, ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-function createWrapperAndAppendToBody(wrapperId: string) {
+const createWrapperAndAppendToBody = (wrapperId: string) => {
     const wrapperElement = document.createElement('div');
     wrapperElement.setAttribute("id", wrapperId);
     wrapperElement.style.position = 'fixed';

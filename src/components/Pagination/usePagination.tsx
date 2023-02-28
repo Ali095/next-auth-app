@@ -13,7 +13,7 @@ type PaginationOptions = {
  * @param options Object containing options for the pagination UI.
  * @returns An array of pagination button elements.
  */
-export function usePagination({ currentPage = 1, totalPages = 1, maxPagesToShow = 5, ellipsisSymbol = '...', onPageButtonClick }: PaginationOptions): JSX.Element[] {
+export const usePagination = ({ currentPage = 1, totalPages = 1, maxPagesToShow = 5, ellipsisSymbol = '...', onPageButtonClick }: PaginationOptions): JSX.Element[] => {
 
 	const pageButtons: JSX.Element[] = [];
 

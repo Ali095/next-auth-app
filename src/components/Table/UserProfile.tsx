@@ -6,7 +6,7 @@ import styles from './styles/profile.module.scss';
 type ProfileProps = {
     profilePicture: string
     name: string
-    email: string
+    email?: string
 }
 
 
