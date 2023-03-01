@@ -4,7 +4,7 @@ import { Icon } from '../../../components/Icons';
 import { RoleUserTable } from './RoleUserTable';
 import styles from './styles/view.module.scss';
 
-const Add = ({ handleClose }: { handleClose: () => void }) => {
+export const Add = ({ handleClose }: { handleClose: () => void }) => {
     const [query, setQuery] = useState('');
     const [showResults, setShowResults] = useState(false);
 
@@ -38,11 +38,9 @@ const Add = ({ handleClose }: { handleClose: () => void }) => {
 
             {
                 showResults && <div className={styles.table}>
-                    <RoleUserTable />
+                    <RoleUserTable users={[]} />
                 </div>
             }
         </div>
     );
 };
-
-export default Add;

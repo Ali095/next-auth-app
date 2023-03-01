@@ -2,6 +2,7 @@ import { PaginationRequestOptions, PaginationResponse } from '../../@types';
 import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../common/constants';
 import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
+import userService from '../users/user.service';
 import { RolesAPIResponse } from './@types';
 
 export class RoleService extends APIService {
@@ -22,7 +23,7 @@ export class RoleService extends APIService {
 			const payload: RolesAPIResponse[] = res.data.payload.map((r: any) => ({
 				id: r.id,
 				roleName: r.name,
-				usersCount: 50,
+				usersCount: r.user_count,
 				permissions: this.limitPermissionstoCardView(r.permissions)
 			}));
 
@@ -42,13 +43,40 @@ export class RoleService extends APIService {
 		}
 	}
 
-	public async createRole(roleData: { name: string; permissions: number[] }): Promise<APIResponse<any>> {
-		return this.post('/access/roles', { ...roleData });
+	public async createRole(roleData: { name: string; permissions: number[] }): Promise<string> {
+		try {
+			await this.post('/access/roles', { ...roleData });
+			return 'Role created successfully';
+		} catch (error) {
+			errorHandler(error, 'Error occurred while creating role');
+			return 'Error occured while creating role';
+		}
 	}
 
-	public async updateRole(id: number, roleData: { name: string; permissions: number[] }): Promise<APIResponse<any>> {
-		return this.put(`/access/roles/${id}`, { ...roleData });
+	public async updateRole(id: number, roleData: { name: string; permissions: number[] }): Promise<string> {
+		try {
+			await this.put(`/access/roles/${id}`, { ...roleData });
+			return 'Role updated successfully'
+		} catch (error) {
+			errorHandler(error, 'Error occurred while updating role');
+			return 'Error occured while updating role';
+		}
 	}
+
+	public async getUserofSpecificRole(id: number, page = 1, limit = 10) {
+		return userService.getUsersList({ page, roleId: id, limit });
+	}
+
+	public async removeUserFromRole({ userId, roleId }: { userId: number, roleId: number }): Promise<string> {
+		try {
+			// await this.get(`/access/roles/${id}`);
+			return 'Role updated successfully'
+		} catch (error) {
+			errorHandler(error, 'Error occurred while updating role');
+			return 'Error occured while updating role';
+		}
+	}
+
 }
 
 export const roleService = new RoleService();

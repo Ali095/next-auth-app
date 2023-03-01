@@ -2,10 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import { Icon } from '../../../components/Icons';
 import styles from './styles/view.module.scss';
-import Add from './AddUserToRole';
+import { Add } from './AddUserToRole';
 import { RoleUserTable } from './RoleUserTable';
+import { UserType } from '../../users/@types';
+import { Pagination } from '../../../components/Pagination';
+import { PaginationOptionsResponse } from '../../../@types';
+import { defaultPaginationOptions } from '../../../common/constants';
 
-export const View = () => {
+type ViewRoleProps = {
+    userCount: number;
+    users: UserType[];
+    loading?: boolean;
+    usersPagination?: PaginationOptionsResponse
+    onPageChange?: (page: number) => any
+    handleUserRemovalFromRole?: (id: number) => any
+}
+
+export const View = ({ userCount = 0, loading = false, users = [], usersPagination = defaultPaginationOptions, onPageChange, handleUserRemovalFromRole }: ViewRoleProps) => {
     const [openAddSection, setOpenAddSection] = useState(false);
 
     useEffect(() => {
@@ -21,7 +34,7 @@ export const View = () => {
         <div className={styles.wrap}>
             <div className={styles.table}>
                 <div className={styles.header}>
-                    <h3 className={styles.title}>Users assigned <small>(14)</small></h3>
+                    <h3 className={styles.title}>Users assigned <small>({userCount})</small></h3>
                     <div className={styles.search}>
                         <input type="text" placeholder='Search Users' />
                     </div>
@@ -33,7 +46,15 @@ export const View = () => {
                         <Icon name='plus' />
                     </button>
                 </div>
-                <RoleUserTable />
+                <RoleUserTable onRemove={handleUserRemovalFromRole} users={users} loading={loading} />
+                <div className={styles.footer}>
+                    <Pagination
+                        {...usersPagination}
+                        maxPagesToShow={3}
+                        limitSelection={false}
+                        handlePageChange={onPageChange}
+                    />
+                </div>
             </div>
         </div>;
 };

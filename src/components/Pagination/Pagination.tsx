@@ -25,9 +25,11 @@ export const Pagination = ({
     recordsPerPage = 10,
     limitSelection = true,
     onUpdate,
+    ellipsisSymbol = '...',
+    maxPagesToShow = 5
 }: PaginationProps): JSX.Element => {
 
-    const pageButtons = usePagination({ currentPage, totalPages, onPageButtonClick: (page) => onChange({ page }) });
+    const pageButtons = usePagination({ currentPage, totalPages, ellipsisSymbol, maxPagesToShow, onPageButtonClick: (page) => onChange({ page }) });
 
 
     const onChange = ({ page = currentPage, limit = recordsPerPage }: { page?: number, limit?: number }) => {

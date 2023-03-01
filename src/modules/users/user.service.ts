@@ -1,17 +1,23 @@
-import { PaginationRequestOptions, PaginationResponse } from '../../@types';
+import { PaginationResponse } from '../../@types';
 import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../common/constants';
 import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
 import { authService } from '../authentication';
 import { IUserCreation } from '../authentication/@types';
-import { UserType } from './@types';
+import { UserType, UserFilterPaginationRequest } from './@types';
 
 export class UserService extends APIService {
-	public async getUsersList(params: PaginationRequestOptions): Promise<PaginationResponse<UserType>> {
+	public async getUsersList(params: Partial<UserFilterPaginationRequest>): Promise<PaginationResponse<UserType>> {
 		const { page, limit, search } = getDefaultPaginationRequestOptions(params);
 
+		const { roleId } = params;
+
 		try {
-			const res: APIResponse<any> = await this.get(`/users?page=${page}&limit=${limit}&search=${search}`);
+			let url = `/users?page=${page}&limit=${limit}`;
+			url += search ? `&search=${search}` : '';
+			url += roleId ? `&role_id=${roleId}` : '';
+
+			const res: APIResponse<any> = await this.get(url);
 
 			const payload = res.data.payload.map((u: any) => ({
 				id: u.id,

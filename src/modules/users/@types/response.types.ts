@@ -1,5 +1,5 @@
 export type UserType = {
-	id: string;
+	id: number;
 	name: string;
 	avatar: string;
 	email: string;

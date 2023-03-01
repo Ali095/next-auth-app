@@ -3,7 +3,7 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { ActionsMenu } from './';
 import styles from './actions.module.scss';
 
-export const Actions = ({ list }: { list: string[] }) => {
+export const Actions = ({ list }: { list: { label: string, onClick: () => any }[] }) => {
     const [open, setOpen] = useState(false);
     const [top, setTop] = useState('auto');
     const [left, setLeft] = useState('auto');
@@ -71,7 +71,12 @@ export const Actions = ({ list }: { list: string[] }) => {
 
                 <div ref={container}>
                     <ul className={styles.list}>
-                        {list.map((action, idx) => <li key={idx} >{action}</li>)}
+                        {list.map((action, idx) => <li
+                            onClick={() => { setOpen(false); action.onClick() }}
+                            key={idx}
+                        >
+                            {action.label}
+                        </li>)}
                     </ul>
                 </div>
             </ActionsMenu>

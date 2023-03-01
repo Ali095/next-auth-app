@@ -7,7 +7,7 @@ import styles from './modal.module.scss';
 type ModalTypes = {
     children: ReactNode
     isOpen: boolean
-    handleClose: (...args: any[]) => any;
+    handleClose: () => any;
     id?: string
     title?: string
 }
