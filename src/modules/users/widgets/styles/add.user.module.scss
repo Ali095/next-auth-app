@@ -1,0 +1,15 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.body {
+    padding: 24px;
+}
+
+.footer {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    // padding: 12px 24px 24px;
+}

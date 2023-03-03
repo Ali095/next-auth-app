@@ -1,12 +1,17 @@
+import { CSSProperties, ReactNode } from 'react';
+
 
 import styles from './checkbox.module.scss';
 
-const Checkbox = ({ ...props }) => {
-    return (
-        <div className={styles.container}>
-            <input {...props} type="checkbox" />
-        </div>
-    );
-};
+type CheckboxProps = {
+    children?: ReactNode,
+    style?: CSSProperties
+}
 
-export default Checkbox;
+export const Checkbox = ({ children, style, ...props }: CheckboxProps) => {
+    return (
+        <div style={style} className={styles.container}>
+            {children ? children : <input type='checkbox' {...props} />}
+        </div>
+    )
+}

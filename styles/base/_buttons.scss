@@ -61,3 +61,19 @@ button {
         margin-left: -10px;
     }
 }
+
+button {
+    &:disabled {
+        cursor: not-allowed;
+        background-color: lightgray;
+        border: 2px solid lightgray;
+        color: black;
+    }
+
+    &:disabled:hover {
+        filter: none;
+        background-color: lightgrey;
+        color: black;
+        transition: none;
+    }
+}

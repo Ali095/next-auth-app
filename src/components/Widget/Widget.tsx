@@ -7,10 +7,8 @@ type WidgetProps = {
     style?: CSSProperties
 }
 
-const Widget = ({ children, style }: WidgetProps) => {
+export const Widget = ({ children, style }: WidgetProps) => {
     return (
         <div style={style} className={styles.wrap}>{children}</div>
     );
 };
-
-export default Widget;

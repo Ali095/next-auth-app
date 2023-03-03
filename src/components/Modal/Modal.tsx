@@ -1,26 +1,26 @@
 
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import Icon from '../Icons/Icons';
-import Portal from '../Portal/Portal';
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { Icon } from "../Icons";
+import { Portal } from "../Portal";
 import styles from './modal.module.scss';
 
 type ModalTypes = {
     children: ReactNode
     isOpen: boolean
-    handleClose: () => void
+    handleClose: () => any;
     id?: string
     title?: string
 }
 
-function Modal({ children, isOpen, handleClose, id = 'modal', title }: ModalTypes) {
+export const Modal = ({ children, isOpen, handleClose, id = 'modal', title }: ModalTypes) => {
     const [open, setOpen] = useState(false);
     const nodeRef = useRef(null);
 
     useEffect(() => {
-        const closeOnEscapeKey = (e: any) => (e.key === 'Escape' ? handleClose() : null);
-        document.body.addEventListener('keydown', closeOnEscapeKey);
+        const closeOnEscapeKey = (e: any) => (e.key === "Escape" ? handleClose() : null);
+        document.body.addEventListener("keydown", closeOnEscapeKey);
         return () => {
-            document.body.removeEventListener('keydown', closeOnEscapeKey);
+            document.body.removeEventListener("keydown", closeOnEscapeKey);
         };
     }, [handleClose]);
 
@@ -28,7 +28,7 @@ function Modal({ children, isOpen, handleClose, id = 'modal', title }: ModalType
         if (!isOpen) {
             setTimeout(() => {
                 setOpen(false);
-                document.body.removeAttribute('data-add-open');
+                document.body.removeAttribute('data-add-open')
             }, 500);
         } else {
             setOpen(true);

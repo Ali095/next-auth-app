@@ -7,10 +7,8 @@ type CheckboxGroupProps = {
     style?: CSSProperties
 }
 
-const CheckboxGroup = ({ children, style }: CheckboxGroupProps) => {
+export const CheckboxGroup = ({ children, style }: CheckboxGroupProps) => {
     return (
         <div style={style} className={styles.group}>{children}</div>
-    );
-};
-
-export default CheckboxGroup;
+    )
+}

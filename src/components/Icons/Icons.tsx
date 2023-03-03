@@ -45,7 +45,7 @@ type IconsList = {
     [key: string]: ReactNode
 }
 
-const Icon = ({ name }: { name: string }) => {
+export const Icon = ({ name }: { name: string }) => {
     const getIcon = () => {
         const icons: IconsList = {
             dashboard: <Dashboard />,
@@ -98,5 +98,3 @@ const Icon = ({ name }: { name: string }) => {
         <i className="icon">{getIcon()}</i>
     );
 };
-
-export default Icon;

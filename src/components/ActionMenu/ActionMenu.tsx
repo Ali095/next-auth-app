@@ -1,25 +1,24 @@
 
-import { ReactNode, useEffect, useRef } from 'react';
-import Portal from '../Portal/Portal';
+import { ReactNode, useEffect } from "react";
+import { Portal } from "../Portal";
 
 type ActionsMenuProps = {
     children: ReactNode
     isOpen: boolean
-    handleClose: () => void
+    handleClose: () => any
     position: {
         top: string
         left: string
     }
 }
 
-const ActionsMenu = ({ children, isOpen, handleClose, position }: ActionsMenuProps) => {
-    const nodeRef = useRef(null);
+export const ActionsMenu = ({ children, isOpen, handleClose, position }: ActionsMenuProps) => {
 
     useEffect(() => {
-        const closeOnEscapeKey = (e: any) => (e.key === 'Escape' ? handleClose() : null);
-        document.body.addEventListener('keydown', closeOnEscapeKey);
+        const closeOnEscapeKey = (e: any) => (e.key === "Escape" ? handleClose() : null);
+        document.body.addEventListener("keydown", closeOnEscapeKey);
         return () => {
-            document.body.removeEventListener('keydown', closeOnEscapeKey);
+            document.body.removeEventListener("keydown", closeOnEscapeKey);
         };
     }, [handleClose]);
 
@@ -33,7 +32,5 @@ const ActionsMenu = ({ children, isOpen, handleClose, position }: ActionsMenuPro
                 }} >{children}</div>
             }
         </Portal>
-    );
-};
-
-export default ActionsMenu;
+    )
+}

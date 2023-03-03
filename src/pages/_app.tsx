@@ -7,12 +7,12 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Progressbar from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
-import { AuthHelper } from '../lib/AuthHelper';
+import { AuthHelper } from '../common/auth';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 
 
-export default function App({ Component, pageProps }: AppProps) {
+export const App = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();
     const [authorized, setAuthorized] = useState(false);
 
@@ -27,14 +27,14 @@ export default function App({ Component, pageProps }: AppProps) {
         // run auth check on route change
         router.events.on('routeChangeComplete', authCheck);
 
-        // unsubscribe from events in useEffect return function
+        // unsubscribe from events in useEffect return method --- unmounting
         return () => {
             router.events.off('routeChangeStart', hideContent);
             router.events.off('routeChangeComplete', authCheck);
         };
     });
 
-    function authCheck(url: string) {
+    const authCheck = (url: string) => {
         // redirect to login page if accessing a private page and not logged in
         const publicPaths = ['/signin', '/signup', '/recover-pass'];
         const path = url.split('?')[0];
@@ -69,3 +69,5 @@ export default function App({ Component, pageProps }: AppProps) {
         />
     </>;
 };
+
+export default App;

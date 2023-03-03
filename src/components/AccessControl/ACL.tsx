@@ -1,18 +1,20 @@
 
-import router from 'next/router';
+import Router from 'next/router';
 import { ReactNode } from 'react';
 import { toast } from 'react-toastify';
-import { AuthHelper, UserAuthData } from '../../lib/AuthHelper';
+import { AuthHelper, UserAuthData } from '../../common/auth';
 
 
 export type ACLProps = {
     children: ReactNode
-    permissions?: string[]
-    roles?: string[]
+    requiredPermissions?: string[]
+    requiredRoles?: string[]
     onlyMe?: boolean
+    self?: boolean
+    selfEligible?: boolean
 }
 
-export const UseACL = ({ children, permissions = [], roles = [] }: ACLProps) => {
+export const UseACL = ({ children, requiredPermissions: permissions = [], requiredRoles: roles = [], selfEligible = true, self = true }: ACLProps) => {
     const userData: UserAuthData = AuthHelper.getLoggedInUserData();
 
     const userHasValidRoles = (): boolean => {
@@ -40,10 +42,16 @@ export const UseACL = ({ children, permissions = [], roles = [] }: ACLProps) => 
 
     if (!userData) {
         toast.error("Can't found the authenticity of user. Please reconsider login");
-        router.push({ pathname: '/signin', query: { returnUrl: router.asPath } });
+        Router.push({ pathname: '/signin', query: { returnUrl: Router.asPath } });
     }
 
-    const isUserHasAccess: boolean = (permissions.length === 0 && roles.length === 0) || userHasValidRoles() || userHasValidPermissions()
+    let isUserHasAccess = false;
+    if (self) // if user is accesing his own data and eligible for doing specific task
+        isUserHasAccess = selfEligible ? true : false;
+    else //Both needed to be true if not accessing self data. If no roles are provided it means component is open to user with any role and same to go with permissions
+        if (userHasValidRoles() && userHasValidPermissions()) isUserHasAccess = true;
 
+
+    console.log('ACl=> ', isUserHasAccess, (selfEligible && self), (permissions.length === 0 && roles.length === 0), userHasValidRoles(), userHasValidPermissions());
     return isUserHasAccess ? <>{children}</> : <></>;
 };

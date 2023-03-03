@@ -6,7 +6,7 @@ export interface NavLinkProps extends LinkProps {
     children: React.ReactElement
 }
 
-export function NavLink({ children, href, ...props }: NavLinkProps) {
+export const NavLink = ({ children, href, ...props }: NavLinkProps) => {
     const router = useRouter();
     const path = router.pathname;
     const activeItem = path.split('/')[path.split('/').length - 1] === href.toString().split('/')[href.toString().split('/').length - 1];

@@ -2,15 +2,15 @@
 import { useState, ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-function createWrapperAndAppendToBody(wrapperId: string) {
+const createWrapperAndAppendToBody = (wrapperId: string) => {
     const wrapperElement = document.createElement('div');
-    wrapperElement.setAttribute('id', wrapperId);
+    wrapperElement.setAttribute("id", wrapperId);
     wrapperElement.style.position = 'fixed';
     document.body.appendChild(wrapperElement);
     return wrapperElement;
 }
 
-function Portal({ children, wrapperId = 'react-portal-wrapper' }: { children: ReactNode, wrapperId: string }) {
+export const Portal = ({ children, wrapperId = "react-portal-wrapper" }: { children: ReactNode, wrapperId: string }) => {
     const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ function Portal({ children, wrapperId = 'react-portal-wrapper' }: { children: Re
             if (systemCreated && element?.parentNode) {
                 element.parentNode.removeChild(element);
             }
-        };
+        }
     }, [wrapperId]);
 
     // wrapperElement state will be null on very first render.
@@ -37,5 +37,3 @@ function Portal({ children, wrapperId = 'react-portal-wrapper' }: { children: Re
 
     return createPortal(children, wrapperElement);
 }
-
-export default Portal;
