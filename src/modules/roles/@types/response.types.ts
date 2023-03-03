@@ -4,3 +4,8 @@ export interface RolesAPIResponse {
 	usersCount: number;
 	permissions: string[];
 }
+
+export interface RolesList {
+	value: number;
+	label: string;
+}

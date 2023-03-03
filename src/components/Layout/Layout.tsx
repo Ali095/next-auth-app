@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { Header } from '../Header';
-import { Content, Main, Section, Sidebar, SidebarNavigation } from './';
+import { Content, Main, Sidebar, SidebarNavigation } from './';
 import styles from './styles/layout.module.scss';
 
-export const Layout = ({ children, ...props }: { children: ReactNode }) => {
+export const Layout = ({ children, screen = 'home', ...props }: { children: ReactNode, screen?: 'settings' | 'home' }) => {
     return (
         <div className={styles.wrap} {...props}>
-            <Sidebar> <SidebarNavigation /> </Sidebar>
+            <Sidebar> <SidebarNavigation variant={screen} /> </Sidebar>
 
             <Main>
                 <Header />

@@ -10,21 +10,22 @@ import { UsersDataTable } from './UsersDataTable';
 import userService from '../user.service';
 import { Pagination } from '../../../components/Pagination';
 import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '../../../common/constants';
+import { IUserCreation } from '../../authentication/@types';
 
 
 export const UsersList = () => {
     const [openModal, setOpenModal] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [waiting, setWaiting] = useState(false);
     const [users, setUsers] = useState<UserType[]>([]);
     const [paginationOptions, setPaginateOptions] = useState(defaultPaginationOptions);
     const [paginationRequest, setPaginationRequest] = useState(getDefaultPaginationRequestOptions());
 
     const fetchData = useCallback(async () => {
-        setLoading(true);
+        setWaiting(true);
         const { paginateOptions, payload } = await userService.getUsersList(paginationRequest);
         setUsers(payload);
         setPaginateOptions(paginateOptions);
-        setLoading(false);
+        setWaiting(false);
     }, [paginationRequest]);
 
     useEffect(() => {
@@ -36,6 +37,13 @@ export const UsersList = () => {
     const filterUsers = (value: string) => {
         if (paginationRequest.search !== value)
             setPaginationRequest({ ...paginationRequest, search: value, page: 1 });
+    }
+
+    const handleUserCreation = async (data: IUserCreation) => {
+        setWaiting(true);
+        await userService.addNewUser(data);
+        setWaiting(false);
+        setOpenModal(false);
     }
 
     return (
@@ -59,7 +67,7 @@ export const UsersList = () => {
                 </div>
             </div>
 
-            <UsersDataTable users={users} loading={loading} />
+            <UsersDataTable users={users} loading={waiting} />
 
             <div className={styles.footer}>
                 <Pagination {...paginationOptions}
@@ -74,7 +82,12 @@ export const UsersList = () => {
                 id="user-add"
                 title='Add Users'
             >
-                <AddUser closePopup={() => setOpenModal(false)} />
+                <AddUser
+                    loading={waiting}
+                    onValidSubmit={handleUserCreation}
+                    error={false}
+                    onDiscard={() => setOpenModal(false)}
+                />
             </Modal>
         </div>
     )

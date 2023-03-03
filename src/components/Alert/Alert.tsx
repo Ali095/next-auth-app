@@ -6,6 +6,8 @@ export interface AlertOptions {
 	closeLabel?: string;
 	closeVariant?: string;
 	transition?: boolean;
+	autoDismissible?: boolean
+	dismissalDuration?: number
 }
 
 export interface AlertProps {
@@ -18,7 +20,9 @@ export interface AlertProps {
 const defaultOptions: AlertOptions = {
 	dismissible: true,
 	closeLabel: 'Close',
-	transition: true
+	transition: true,
+	autoDismissible: true,
+	dismissalDuration: 5000
 }
 
 export const CustomAlert = ({ type = 'info', heading = false, content, options = defaultOptions }: AlertProps) => {
@@ -27,7 +31,13 @@ export const CustomAlert = ({ type = 'info', heading = false, content, options =
 	useEffect(() => {
 		if (content)
 			setShowAlert(true);
-	}, [content]);
+
+		if (options.autoDismissible)
+			setTimeout(() => {
+				setShowAlert(false);
+			}, options.dismissalDuration);
+
+	}, [content, options.autoDismissible, options.dismissalDuration]);
 
 	return showAlert ? <Alert
 		style={{ width: '100%' }}

@@ -3,7 +3,7 @@ import { defaultPaginationOptions, getDefaultPaginationRequestOptions } from '..
 import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
 import userService from '../users/user.service';
-import { RolesAPIResponse } from './@types';
+import { RolesAPIResponse, RolesList } from './@types';
 
 export class RoleService extends APIService {
 	private limitPermissionstoCardView = (permissions: any[], limit = 5) => {
@@ -43,6 +43,33 @@ export class RoleService extends APIService {
 		}
 	}
 
+	public async getRolesList(params?: Partial<PaginationRequestOptions>): Promise<PaginationResponse<RolesList>> {
+		const { page, limit, search } = getDefaultPaginationRequestOptions(params);
+
+		try {
+			const res: APIResponse<any> = await this.get(`/access/roles?page=${page}&limit=${limit}&search=${search}`);
+
+			const payload: RolesList[] = res.data.payload.map((r: any) => ({
+				value: r.id,
+				label: r.name,
+			}));
+
+			const rolesPaginatedData: PaginationResponse<RolesList> = {
+				paginateOptions: res.data.paginate_options,
+				payload
+			};
+
+			return rolesPaginatedData;
+
+		} catch (error) {
+			errorHandler(error, 'Error occurred while fetching roles');
+			return {
+				paginateOptions: defaultPaginationOptions,
+				payload: []
+			}
+		}
+	}
+
 	public async createRole(roleData: { name: string; permissions: number[] }): Promise<string> {
 		try {
 			await this.post('/access/roles', { ...roleData });
@@ -67,14 +94,8 @@ export class RoleService extends APIService {
 		return userService.getUsersList({ page, roleId: id, limit });
 	}
 
-	public async removeUserFromRole({ userId, roleId }: { userId: number, roleId: number }): Promise<string> {
-		try {
-			// await this.get(`/access/roles/${id}`);
-			return 'Role updated successfully'
-		} catch (error) {
-			errorHandler(error, 'Error occurred while updating role');
-			return 'Error occured while updating role';
-		}
+	public async updateUserRole({ userId, roleId }: { userId: number, roleId: number }) {
+		return userService.updateUser(userId, { roles: [roleId] });
 	}
 
 }

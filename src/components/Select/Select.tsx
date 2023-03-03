@@ -1,5 +1,6 @@
 
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { Loader } from '../Loader';
 import styles from './select.module.scss';
 
 type SelectOption = {
@@ -10,30 +11,46 @@ type SelectOption = {
 type SingleSelectProps = {
     multiple?: false,
     value?: SelectOption,
-    onChange: (value: SelectOption | undefined) => void
+    onChange: (value: SelectOption) => any
 }
 
 type MultipleSelectProps = {
     multiple: true,
     value: SelectOption[],
-    onChange: (value: SelectOption[]) => void
+    onChange: (value: SelectOption[]) => any
 }
 
 type SelectProps = {
     options: SelectOption[],
     style?: CSSProperties
+    loading?: boolean
 } & (SingleSelectProps | MultipleSelectProps)
 
-export const Select = ({ multiple, value, options, style, onChange }: SelectProps) => {
+export const Select = ({ multiple, value, options, style, onChange, loading = false }: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [highlightedIndex, setHighlightedIndex] = useState(0);
+    const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    function clearOptions() {
-        multiple ? onChange([]) : onChange(undefined);
+    // useEffect(() => {
+    //     console.log('current value=> ',value);
+    //     if (!multiple) {
+    //         if (!value) {
+    //             selectOption({ label: 'Please Select', value: -1 });
+    //         } else {
+    //             selectOption(value);
+    //         }
+    //     }
+    // }, []);
+
+    const clearOptions = () => {
+        if (multiple) onChange([])
+        else {
+            setHighlightedIndex(0);
+            onChange({ value: -1, label: 'Please Select' });
+        };
     }
 
-    function selectOption(option: SelectOption) {
+    const selectOption = useCallback((option: SelectOption) => {
         if (multiple) {
             if (value.includes(option)) {
                 onChange(value.filter(o => o !== option));
@@ -41,17 +58,15 @@ export const Select = ({ multiple, value, options, style, onChange }: SelectProp
                 onChange([...value, option]);
             }
         } else {
-            if (option !== value) onChange(option);
+            if (option.value !== value?.value) {
+                onChange(option);
+            }
         }
-    }
+    }, [multiple, onChange, value])
 
-    function isOptionSelected(option: SelectOption) {
-        return multiple ? value.includes(option) : option === value;
+    const isOptionSelected = (option: SelectOption) => {
+        return multiple ? value.includes(option) : option.value === value?.value;
     }
-
-    useEffect(() => {
-        if (isOpen) setHighlightedIndex(0);
-    }, [isOpen]);
 
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
@@ -93,14 +108,13 @@ export const Select = ({ multiple, value, options, style, onChange }: SelectProp
         return () => {
             container?.removeEventListener('keydown', handler);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen, highlightedIndex, options]);
+    }, [highlightedIndex, isOpen, options, selectOption]);
 
     return (
         <div
             ref={containerRef}
             onBlur={() => setIsOpen(false)}
-            onClick={() => setIsOpen(prev => !prev)}
+            onClick={() => !loading && setIsOpen(prev => !prev)}
             tabIndex={0}
             className={styles.container}
             style={style}
@@ -108,6 +122,7 @@ export const Select = ({ multiple, value, options, style, onChange }: SelectProp
             <span className={styles.value}>{
                 multiple ? value.map(v => (
                     <button
+                        type='button'
                         key={v.value}
                         onClick={e => {
                             e.stopPropagation();
@@ -117,13 +132,14 @@ export const Select = ({ multiple, value, options, style, onChange }: SelectProp
                     >{v.label}
                         <span className={styles['remove-btn']} >&times;</span>
                     </button>
-                )) : value?.label
+                )) : loading ? <Loader placement='right' width={20} height={20} /> : value?.label
             }</span>
 
             <button
+                type='button'
                 onClick={e => {
                     e.stopPropagation();
-                    clearOptions();
+                    !loading &&clearOptions();
                 }}
                 className={styles['clear-btn']}
             > &times;</button>
@@ -133,22 +149,23 @@ export const Select = ({ multiple, value, options, style, onChange }: SelectProp
 
             <ul className={`${styles.options} ${isOpen ? styles.show : ''}`}>
                 {
-                    options.map((option, idx) => (
-                        <li
-                            onClick={e => {
-                                e.stopPropagation();
-                                selectOption(option);
-                                setIsOpen(false);
-                            }}
-                            key={option.value}
-                            className={
-                                `${styles.option}
+                    loading ? <Loader width={20} height={20} /> :
+                        options.map((option, idx) => (
+                            <li
+                                onClick={e => {
+                                    e.stopPropagation();
+                                    selectOption(option);
+                                    setIsOpen(false);
+                                }}
+                                key={option.value}
+                                className={
+                                    `${styles.option}
                                 ${isOptionSelected(option) ? styles.selected : ''}
                                 ${idx === highlightedIndex ? styles.highlighted : ''}
                                 `}
-                            onMouseEnter={() => setHighlightedIndex(idx)}
-                        >{option.label}</li>
-                    ))
+                                onMouseEnter={() => setHighlightedIndex(idx)}
+                            >{option.label}</li>
+                        ))
                 }
             </ul>
         </div>

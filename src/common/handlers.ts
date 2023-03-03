@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { APIResponse } from '../services/base.api.service';
 import logger from './logger';
 
 export type asyncHandlerOptions = {
@@ -23,14 +24,19 @@ export const asyncHandler = async <T>(asyncFunction: Function, errorMessage: boo
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const errorHandler = (error: any, toastErrorMessage: boolean | string = false, ...stateUpdate: any[]) => {
+export const errorHandler = (error: any, toastErrorMessage: boolean | string = false): APIResponse<any> => {
 	if (toastErrorMessage) {
 		logger.custom('Error Handler', 'error', error.message);
 		toast.error(String(error.message));
 	} else {
 		logger.custom('Error Handler', 'error', 'Error occured while executing the operation', error);
 	}
-	return { success: false };
+	return {
+		success: false,
+		data: undefined,
+		message: toastErrorMessage || error.message || 'Error occured while executing the operation',
+		statusCode: 500
+	};
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

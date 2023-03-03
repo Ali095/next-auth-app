@@ -1,26 +1,35 @@
 
-import React, { useState } from 'react';
-import { text } from 'stream/consumers';
+import { useState } from 'react';
 import { Actions } from '../../../components/ActionMenu';
 import { Checkbox } from '../../../components/Checkbox';
-import { InputGroup } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
 import { Modal } from '../../../components/Modal';
-import { Select } from '../../../components/Select';
 import { Table, UserProfile } from '../../../components/Table';
 import { UserType } from '../../users/@types';
+import { UpdateUserRole } from './updateUserRole';
 
 export type RoleUserTableProps = {
-    users: UserType[],
+    users?: UserType[],
     loading?: boolean,
-    onRemove?: (id: number) => any
+    onUserRoleUpdate?: (params: { userId: number, roleId: number }) => any
 }
 
-export const RoleUserTable = ({ users = [], loading, onRemove }: RoleUserTableProps): JSX.Element => {
+export const RoleUserTable = ({ users = [], loading = false, onUserRoleUpdate }: RoleUserTableProps): JSX.Element => {
     const labels = ['ID', 'User', 'Action'];
     const [roleupdateModal, setRoleupdateModal] = useState(false);
+    const [userToUpdate, setUserToUpdate] = useState({ role: '', id: -1 });
 
-    //onRemove && onRemove(user.id)
+    const openRoleUpdateModal = (roleName: string, userId: number) => {
+        setUserToUpdate({ role: roleName, id: userId });
+        setRoleupdateModal(true);
+    };
+
+    const handleUserRoleUpdate = (newRole: number) => {
+        console.log('role submitted from popup', newRole);
+        onUserRoleUpdate && onUserRoleUpdate({ userId: userToUpdate.id, roleId: newRole });
+        setRoleupdateModal(false);
+    }
+
     const renderUsers: JSX.Element[] = users.map((user, idx) => (
         <tr key={idx}>
             <td><Checkbox /></td>
@@ -28,7 +37,7 @@ export const RoleUserTable = ({ users = [], loading, onRemove }: RoleUserTablePr
             <td><UserProfile profilePicture={user.avatar} name={user.name} email={user.email} /></td>
             <td><Actions list={[
                 { label: 'View', onClick: () => { console.log("Redirect to user Detailed view page") } },
-                { label: 'Change Role', onClick: () => setRoleupdateModal(true) }
+                { label: 'Change Role', onClick: () => openRoleUpdateModal(user.role, user.id) }
             ]} /></td>
         </tr>
     ));
@@ -48,14 +57,12 @@ export const RoleUserTable = ({ users = [], loading, onRemove }: RoleUserTablePr
             handleClose={() => setRoleupdateModal(false)}
             title={'Update User Role'}
         >
-            <InputGroup style={{padding:'30px'}} label='Select Role' required>
-                <Select
-                    value={{ label: '', value: '' }}
-                    options={[{ label: 'Please Select', value: 'hello' }]}
-                    onChange={(o) => { console.log(o) }}
-                    style={{ maxWidth: '100%' }}
-                />
-            </InputGroup>
+            <UpdateUserRole
+                loading={loading}
+                currentRole={{ label: userToUpdate.role }}
+                onDiscard={() => setRoleupdateModal(false)}
+                onSubmit={handleUserRoleUpdate}
+            />
         </Modal>
     </>
     )

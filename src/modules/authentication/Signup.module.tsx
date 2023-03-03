@@ -24,14 +24,15 @@ export const SignupModule = () => {
         const { email, password } = data;
         setLoading(true); setErrorMessage('');
 
-        const { success } = await authService.signup(email, password)
-            .catch(e => errorHandler(e, false, setErrorMessage(e.message)));
+        const { success, message } = await authService.signup(email, password);
         setLoading(false);
 
         if (success) {
             toast.success('Registered Successfully');
             const returnUrl = Router.query.returnUrl?.toString() || '/';
             Router.push(returnUrl);
+        } else {
+            setErrorMessage(message);
         }
     };
 

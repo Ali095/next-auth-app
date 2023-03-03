@@ -8,15 +8,25 @@ import { Card } from './widgets/Card';
 
 export const RolesModule = () => {
 	const [roles, setRoles] = useState<RolesAPIResponse[]>([]);
+	const [waiting, setWaiting] = useState(false);
 
 	const fetchRoles = async () => {
+		setWaiting(true);
 		const rolesData = await roleService.getAllRoles({ limit: 20 });
 		setRoles(rolesData.payload);
+		setWaiting(false);
 	};
 
 	useEffect(() => {
 		fetchRoles();
 	}, []);
+
+	const handleRoleUpdate = async ({ id, roleName, permissions: updatedPermissions }: { id: number, roleName: string, permissions: number[] }) => {
+		setWaiting(true);
+		await roleService.updateRole(id, { name: roleName, permissions: updatedPermissions });
+		await fetchRoles();
+		setWaiting(false);
+	}
 
 	return (
 		<Layout>
@@ -26,7 +36,15 @@ export const RolesModule = () => {
 				</SectionHeader>
 
 				<div className="cards">
-					{roles.map((role, idx) => <Card key={idx} {...role} />)}
+					{roles.map((role, idx) => (
+						<Card
+							key={idx}
+							roleData={{ ...role }}
+							onRoleUpdate={handleRoleUpdate}
+							loading={waiting}
+							refreshData={fetchRoles}
+						/>)
+					)}
 					<AddRoleButton onSuccess={fetchRoles} />
 				</div>
 			</Section>

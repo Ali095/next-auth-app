@@ -10,15 +10,15 @@ import { PaginationOptionsResponse } from '../../../@types';
 import { defaultPaginationOptions } from '../../../common/constants';
 
 type ViewRoleProps = {
-    userCount: number;
-    users: UserType[];
+    userCount?: number;
+    users?: UserType[];
     loading?: boolean;
     usersPagination?: PaginationOptionsResponse
     onPageChange?: (page: number) => any
-    handleUserRemovalFromRole?: (id: number) => any
+    onUserRoleUpdate?: (params: { userId: number, roleId: number }) => any
 }
 
-export const View = ({ userCount = 0, loading = false, users = [], usersPagination = defaultPaginationOptions, onPageChange, handleUserRemovalFromRole }: ViewRoleProps) => {
+export const View = ({ userCount = 0, loading = false, users = [], usersPagination = defaultPaginationOptions, onPageChange, onUserRoleUpdate }: ViewRoleProps) => {
     const [openAddSection, setOpenAddSection] = useState(false);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ export const View = ({ userCount = 0, loading = false, users = [], usersPaginati
                         <Icon name='plus' />
                     </button>
                 </div>
-                <RoleUserTable onRemove={handleUserRemovalFromRole} users={users} loading={loading} />
+                <RoleUserTable onUserRoleUpdate={onUserRoleUpdate} users={users} loading={loading} />
                 <div className={styles.footer}>
                     <Pagination
                         {...usersPagination}

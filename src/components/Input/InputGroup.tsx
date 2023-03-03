@@ -15,7 +15,7 @@ export const InputGroup = ({ id, label, style, required, children }: InputGroupP
         <div className={styles.group} style={style}>
             <label htmlFor={id}>
                 {label}
-                {required && <small>  (Required)</small>}
+                <small> {required? '(Required)': '(Optional)'}</small>
             </label>
             {children}
         </div>

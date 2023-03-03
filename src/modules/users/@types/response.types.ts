@@ -11,6 +11,42 @@ export type UserType = {
 	status: string;
 }
 
+export type UserDetails = {
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	emailVerified: boolean;
+	status: string;
+	username: string;
+	signupDate: string;
+	updatedAt: string;
+	company: string;
+	timeZone: string;
+	profilePicture: string;
+	lastLogin: string;
+	role: { value: number, label: string };
+	permissions: string[]
+}
+
+export const emptyUserDetails: UserDetails = {
+	id: -1,
+	firstName: '',
+	lastName: '',
+	email: '',
+	emailVerified: false,
+	status: '',
+	username: '',
+	signupDate: '',
+	updatedAt: '',
+	company: '',
+	timeZone: '',
+	profilePicture: '',
+	lastLogin: '',
+	role: { value: 0, label: 'Please Select' },
+	permissions: []
+}
+
 // export type UserResponseDto = {
 
 // 	id: number;

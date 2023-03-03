@@ -24,7 +24,7 @@ export class APIService {
 	 * @param baseAPIURL - The base URL of the API.
 	 * @param version - The version of the API to use.
 	 */
-	constructor(baseAPIURL = "http://localhost:5000/api", version = "1") {
+	constructor(baseAPIURL = "http://192.168.18.239:5000/api", version = "1") {
 		this.baseUrl = `${baseAPIURL}/v${version}`;
 	}
 

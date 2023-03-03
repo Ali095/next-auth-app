@@ -4,7 +4,7 @@ import { errorHandler } from '../../common/handlers';
 import { APIService, APIResponse } from '../../services/base.api.service';
 import { authService } from '../authentication';
 import { IUserCreation } from '../authentication/@types';
-import { UserType, UserFilterPaginationRequest } from './@types';
+import { UserType, UserFilterPaginationRequest, UserDetails, emptyUserDetails } from './@types';
 
 export class UserService extends APIService {
 	public async getUsersList(params: Partial<UserFilterPaginationRequest>): Promise<PaginationResponse<UserType>> {
@@ -48,8 +48,43 @@ export class UserService extends APIService {
 		}
 	}
 
+	public async getUsersDetails(userId: number): Promise<UserDetails> {
+		try {
+
+			const res: APIResponse<any> = await this.get(`/users/${userId}`);
+
+			const payload: UserDetails = {
+				id: res.data.id,
+				firstName: res.data.first_name + " " + res.data.last_name,
+				profilePicture: res.data.profile_picture || `https://ui-avatars.com/api/?name=${res.data.first_name}+${res.data.last_name}&size=512&background=random&font-size=0.45`,
+				email: res.data.email,
+				lastLogin: res.data.last_logged_in ? `${new Date(res.data.last_logged_in).toDateString()}, ${new Date(res.data.last_logged_in).toLocaleTimeString()},` : 'N/A',
+				role: { label: res.data?.roles[0]?.name, value: res.data?.roles[0]?.id },
+				signupDate: new Date(res.data.created_at).toDateString(),
+				status: res.data.status,
+				company: res.data.company,
+				emailVerified: res.data.email_verified,
+				lastName: res.data.last_name,
+				permissions: res.data.permissions?.map((p: { slug: string, description: string }) => p.slug),
+				timeZone: res.data.timezone,
+				updatedAt: res.data.updated_at ? `${new Date(res.data.updated_at).toDateString()}, ${new Date(res.data.updated_at).toLocaleTimeString()},` : 'N/A',
+				username: res.data.username
+			};
+
+			return payload;
+
+		} catch (error) {
+			errorHandler(error, 'Error occurred while fetching users');
+			return emptyUserDetails;
+		}
+	}
+
 	public async addNewUser(userData: IUserCreation) {
-		authService.signup('a', 'b', { first_name: 'nikal bhr' });
+		return authService.signup(userData.email, userData.password, { ...userData }).catch(e => errorHandler(e, 'Error occurred while creating new user'));
+	}
+
+	public async updateUser(userId: number, userData: Partial<IUserCreation>) {
+		return this.put(`/users/${userId}`, { ...userData }).catch(e => errorHandler(e, 'Error occurred while updating user'));
 	}
 }
 
